@@ -3,10 +3,11 @@ package com.example.ammulu.waterbilling;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class SubBillingActivity extends Activity {
+public class SubBillingActivity extends AppCompatActivity {
      Button bill,collection,validate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,5 +38,11 @@ public class SubBillingActivity extends Activity {
                 startActivity(i);
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        Intent i=new Intent(getApplicationContext(),HomeActivity.class);
+        startActivity(i);
+        
     }
 }

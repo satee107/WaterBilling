@@ -39,7 +39,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill);
         buttonChoose = (Button) findViewById(R.id.browse);
-        upload = (Button) findViewById(R.id.upload);
+        upload = (Button) findViewById(R.id.billsubmit);
         b1 = (Button) findViewById(R.id.b1);
         imageView = (ImageView) findViewById(R.id.img);
 
@@ -134,9 +134,9 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
             selectImage();
         }
         if (v == upload) {
-            selectImage();
+            //selectImage();
         } if (v == b1) {
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, SubBillingActivity.class));
         }
 
     }

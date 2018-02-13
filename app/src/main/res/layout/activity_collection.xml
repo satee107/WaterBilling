@@ -5,16 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:gravity="center"
     tools:context="com.example.ammulu.waterbilling.CollectionActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="165dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/smilelogo"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:textColor="#000089"
         android:gravity="center"
-        android:padding="20dp"
         android:text="Globalm Meter Billing System"/>
-
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_flatno"
@@ -26,8 +33,6 @@
             android:id="@+id/editcflatno"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
             android:ems="10"
             android:hint="Flat No"
             android:inputType="text"
@@ -46,8 +51,6 @@
             android:id="@+id/editamount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
             android:ems="10"
             android:hint="Amount"
             android:inputType="text"
@@ -61,18 +64,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_weight="2"
         android:layout_marginTop="20dp"
         >
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Submit"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:id="@+id/upload"
             android:textColor="#ffffff"
+            android:layout_weight="1"
             android:textStyle="bold"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/btnblue"
             />
@@ -80,11 +84,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back"
-            android:layout_marginRight="10dp"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="#ffffff"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
             android:textStyle="bold"
-            android:id="@+id/b1"
+            android:id="@+id/collectionback"
             android:background="@drawable/btnred"/>
     </LinearLayout>
 </LinearLayout>
