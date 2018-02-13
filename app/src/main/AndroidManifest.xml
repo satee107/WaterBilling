@@ -27,7 +27,10 @@
         <activity android:name=".ReportsActivity" />
         <activity android:name=".BillActivity" />
         <activity android:name=".CollectionActivity" />
-        <activity android:name=".ValidateActivity"></activity>
+        <activity android:name=".ValidateActivity" />
+        <activity android:name=".SubBillingActivity" />
+        <activity android:name=".ValidateBillingActivity" />
+        <activity android:name=".ValidateCollectionActivity"></activity>
     </application>
 
 </manifest>

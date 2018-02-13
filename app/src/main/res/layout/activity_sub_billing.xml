@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="20dp"
     android:gravity="center"
-    tools:context="com.example.ammulu.waterbilling.HomeActivity">
+    tools:context="com.example.ammulu.waterbilling.SubBillingActivity">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,9 +19,9 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Billing and collection"
+        android:text="Billing"
         android:textSize="20dp"
-        android:id="@+id/billingbtn"
+        android:id="@+id/billing"
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:layout_marginBottom="30dp"
@@ -33,20 +32,20 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Reports"
+        android:text="Collections"
         android:textSize="20dp"
         android:textColor="#ffffff"
         android:textStyle="bold"
-        android:id="@+id/reports"
+        android:id="@+id/collection"
         android:background="@drawable/custombutton"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logout"
+        android:text="Validate"
         android:textSize="20dp"
         android:textColor="#ffffff"
         android:textStyle="bold"
-        android:id="@+id/logout"
+        android:id="@+id/validate"
         android:layout_marginTop="30dp"
         android:background="@drawable/btnred"/>
 </LinearLayout>
