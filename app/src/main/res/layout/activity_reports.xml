@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context="com.example.ammulu.waterbilling.ReportsActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:textColor="#000089"
         android:padding="20dp"
         android:gravity="center"
@@ -18,100 +19,255 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         style="@style/spinner_style"
         android:entries="@array/months">
     </Spinner>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
         <LinearLayout
+            android:id="@+id/newsurveyll"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:id="@+id/newsurveyll"
+            android:layout_height="250dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:orientation="vertical">
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_weight="1"
-                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:text="Bills Raised"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2.0"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+                <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total Cons :"
+                android:textColor="#fff"
+               android:layout_weight="0.75"
+                android:textSize="15dp"
+                android:textStyle="bold|italic" />
+                <TextView
+                    android:id="@+id/totalcons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="7"
+                    android:layout_weight="1.25"
+                    android:textColor="#fff"
+                    android:textSize="15dp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
-                android:gravity="center"
-                android:background="@color/colorAccent"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textStyle="bold|italic"
-                    android:textColor="#fff"
-                    android:text="Total Cons 7"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textStyle="bold|italic"
-                    android:textColor="#fff"
-                    android:text="Billed 5"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textStyle="bold|italic"
-                    android:textColor="#fff"
-                    android:text="UnBilled 2"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textStyle="bold|italic"
-                    android:textColor="#fff"
-                    android:text="Demand  5000"/>
+                android:orientation="horizontal"
+                android:weightSum="2.0">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.75"
+                    android:text="Billed :"
+                    android:textColor="#fff"
+                    android:textSize="15dp"
+                    android:textStyle="bold|italic" />
+
+                <TextView
+                    android:id="@+id/billed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.25"
+                    android:text="5"
+                    android:textColor="#fff"
+                    android:textSize="15dp"
+                    android:textStyle="bold|italic" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/updatesurveyll"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_weight="1"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:background="#55f"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:weightSum="2.0"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UnBilled :"
+                android:layout_weight="0.75"
+                android:textColor="#fff"
+                android:textSize="15dp"
+                android:textStyle="bold|italic" />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/unbilled"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textStyle="bold|italic"
+                    android:text="2000"
+                    android:layout_weight="1.25"
                     android:textColor="#fff"
-                    android:text="Bills Paid 3"/>
+                    android:textSize="15dp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2.0"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Demand :"
+                android:textColor="#fff"
+                android:textSize="15dp"
+                android:layout_weight="0.75"
+                android:textStyle="bold|italic" />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/demand"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textStyle="bold|italic"
+                    android:text="5000"
+                    android:layout_weight="1.25"
                     android:textColor="#fff"
-                    android:text="Unpaid 2"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textStyle="bold|italic"
-                    android:textColor="#fff"
-                    android:text="Collection 3000"/>
+                    android:textSize="15dp"
+                    android:textStyle="bold|italic" />
             </LinearLayout>
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/updatesurveyll"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="#55f"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:text="Bills Collected"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2.0">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.75"
+                    android:text="Bills Paid :"
+                    android:textColor="#fff"
+                    android:textSize="15dp"
+                    android:textStyle="bold|italic" />
+
+                <TextView
+                    android:id="@+id/billpaid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.25"
+                    android:text="3"
+                    android:textColor="#fff"
+                    android:textSize="15dp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2.0">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unpaid :"
+                android:textColor="#fff"
+                android:layout_weight="0.75"
+                android:textSize="15dp"
+                android:textStyle="bold|italic" />
+                <TextView
+                    android:id="@+id/unpaid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:layout_weight="1.25"
+                    android:textColor="#fff"
+                    android:textSize="15dp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2.0">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Collection :"
+                android:textColor="#fff"
+                android:layout_weight="0.75"
+                android:textSize="15dp"
+                android:textStyle="bold|italic" />
+                <TextView
+                    android:id="@+id/collection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3000"
+                    android:layout_weight="1.25"
+                    android:textColor="#fff"
+                    android:textSize="15dp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
     <Button
+        android:id="@+id/b3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btnred"
         android:text="Back"
-        android:layout_margin="20dp"
-        android:textSize="20dp"
         android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:id="@+id/b3"
-        android:background="@drawable/btnred"/>
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
 
 </LinearLayout>

@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="170dp"
-        android:src="@drawable/smilelogo" />
+        android:src="@drawable/transwaterlogo" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,4 +44,14 @@
         android:textStyle="bold"
         android:id="@+id/vcollection"
         android:background="@drawable/custombutton"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="back"
+        android:textSize="15dp"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:id="@+id/vback"
+        android:background="@drawable/btnred"/>
 </LinearLayout>

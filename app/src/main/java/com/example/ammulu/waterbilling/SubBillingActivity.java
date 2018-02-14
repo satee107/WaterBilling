@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class SubBillingActivity extends AppCompatActivity {
-     Button bill,collection,validate;
+     Button bill,collection,validate,billback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,6 +16,7 @@ public class SubBillingActivity extends AppCompatActivity {
         bill=(Button)findViewById(R.id.billing);
         collection=(Button)findViewById(R.id.collection);
         validate=(Button)findViewById(R.id.validate);
+        billback=(Button)findViewById(R.id.subbillback);
         bill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,6 +36,13 @@ public class SubBillingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(getApplicationContext(),ValidateActivity.class);
+                startActivity(i);
+            }
+        });
+        billback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(getApplicationContext(),HomeActivity.class);
                 startActivity(i);
             }
         });
