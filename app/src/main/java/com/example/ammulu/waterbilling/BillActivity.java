@@ -15,25 +15,24 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class BillActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String UPLOAD_KEY = "image";
-
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private String userChoosenTask;
-
-
     private int PICK_IMAGE_REQUEST = 1;
     private ImageView imageView;
-
     private Bitmap bitmap;
-
     private Uri filePath;
-    private Button buttonChoose,b1,upload;
+    private Button buttonChoose,b1,upload,billsubmitbtn;
+    EditText etconno,etflatno,etreading;
+    String connno,flatno,reading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +41,10 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
         upload = (Button) findViewById(R.id.billsubmit);
         b1 = (Button) findViewById(R.id.b1);
         imageView = (ImageView) findViewById(R.id.img);
-
+        billsubmitbtn=(Button)findViewById(R.id.billsubmit);
+        etconno=(EditText)findViewById(R.id.editconno);
+        etflatno=(EditText)findViewById(R.id.editflatno);
+        etreading=(EditText)findViewById(R.id.editreading);
         buttonChoose.setOnClickListener(this);
         b1.setOnClickListener(this);
         upload.setOnClickListener(this);
@@ -51,6 +53,28 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
             //buttonChoose.setEnabled(false);
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
         }
+        billsubmitbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                connno=etconno.getText().toString();
+                flatno=etflatno.getText().toString();
+                reading=etreading.getText().toString();
+                if(connno.equals("")){
+                    etconno.setError("Enter connection no");
+                    etconno.setFocusable(true);
+
+                }else if(flatno.equals("")) {
+                    etflatno.setError("Enter valid Flat no");
+                    etflatno.setFocusable(true);
+
+                }else if(reading.equals("")){
+                     etreading.setError("Enter Reading");
+                     etreading.setFocusable(true);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Submitted Successfully",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
     private void showFileChooser() {

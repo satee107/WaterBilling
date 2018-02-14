@@ -5,19 +5,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     Button signin;
+    EditText etname,etpwd;
+    String uname,upwd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        etname=(EditText)findViewById(R.id.editname);
+        etpwd=(EditText)findViewById(R.id.editpwd);
         signin=(Button)findViewById(R.id.signin);
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(getApplicationContext(),HomeActivity.class);
-                startActivity(i);
+                uname=etname.getText().toString();
+                upwd=etpwd.getText().toString();
+                if(uname.equals("")||uname.length()<3){
+                    etname.setError("Enter min 3 chars username");
+                    etpwd.setFocusable(true);
+
+                }else if(upwd.equals("")) {
+                    etpwd.setError("Enter valid Mobile no");
+                    etpwd.setFocusable(true);
+
+                }else {
+                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(i);
+                }
             }
         });
     }
