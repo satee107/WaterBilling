@@ -1,11 +1,19 @@
 package com.example.ammulu.waterbilling;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.ammulu.waterbilling.Network.Conn;
+import com.example.ammulu.waterbilling.Network.ConnectivityReceiver;
+
+import static com.example.ammulu.waterbilling.Network.Conn.displayMobileDataSettingsDialog;
 
 public class MainActivity extends AppCompatActivity {
     Button signin;
@@ -18,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
         etname=(EditText)findViewById(R.id.editname);
         etpwd=(EditText)findViewById(R.id.editpwd);
         signin=(Button)findViewById(R.id.signin);
+//        checkConnection();
+//        if(ConnectivityReceiver.isConnected()==false){
+//            //checkConnection();
+//            displayMobileDataSettingsDialog(MainActivity.this);
+//        }
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +50,31 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        showSnack(isConnected);
+    }
+    // Showing the status in Snackbar
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = "Good! Connected to Internet";
+            color = Color.WHITE;
+        } else {
+            message = "Sorry! Not connected to internet";
+            color = Color.RED;
+        } Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),message , Snackbar.LENGTH_LONG);
+        // snackbar.show();
+//        Snackbar snackbar = Snackbar
+//                .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
     }
     @Override
     public void onBackPressed() {

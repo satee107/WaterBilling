@@ -27,7 +27,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private String userChoosenTask;
     private int PICK_IMAGE_REQUEST = 1;
-    private ImageView imageView;
+    private ImageView imageView1;
     private Bitmap bitmap;
     private Uri filePath;
     private Button buttonChoose,b1,upload,billsubmitbtn;
@@ -40,7 +40,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
         buttonChoose = (Button) findViewById(R.id.browse);
         upload = (Button) findViewById(R.id.billsubmit);
         b1 = (Button) findViewById(R.id.b1);
-        imageView = (ImageView) findViewById(R.id.img);
+        imageView1 = (ImageView) findViewById(R.id.img);
         billsubmitbtn=(Button)findViewById(R.id.billsubmit);
         etconno=(EditText)findViewById(R.id.editconno);
         etflatno=(EditText)findViewById(R.id.editflatno);
@@ -70,7 +70,9 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
                 }else if(reading.equals("")){
                      etreading.setError("Enter Reading");
                      etreading.setFocusable(true);
-                }else{
+                }else if(imageView1.getDrawable() == null){
+                    Toast.makeText(getApplicationContext(),"Please insert image",Toast.LENGTH_LONG).show();
+                } else{
                     Toast.makeText(getApplicationContext(),"Submitted Successfully",Toast.LENGTH_LONG).show();
                 }
             }
@@ -127,7 +129,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
             filePath = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
+                imageView1.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -138,7 +140,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
             //onCaptureImageResult(data);
             bitmap = (Bitmap) data.getExtras().get("data");
             //storeImage(bm);
-            imageView.setImageBitmap(bitmap);
+            imageView1.setImageBitmap(bitmap);
 
 
         }
