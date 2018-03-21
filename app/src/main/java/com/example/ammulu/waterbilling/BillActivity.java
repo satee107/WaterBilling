@@ -48,6 +48,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
         buttonChoose.setOnClickListener(this);
         b1.setOnClickListener(this);
         upload.setOnClickListener(this);
+        //upload.setOnClickListener(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             //buttonChoose.setEnabled(false);
