@@ -1,17 +1,32 @@
 package com.example.ammulu.waterbilling;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.ammulu.waterbilling.Network.API;
 import com.example.ammulu.waterbilling.Network.Conn;
 import com.example.ammulu.waterbilling.Network.ConnectivityReceiver;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
 
 import static com.example.ammulu.waterbilling.Network.Conn.displayMobileDataSettingsDialog;
 
@@ -19,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     Button signin;
     EditText etname,etpwd;
     String uname,upwd;
+    int flag = 0;
+   // JSONObject jsonObj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         etname=(EditText)findViewById(R.id.editname);
         etpwd=(EditText)findViewById(R.id.editpwd);
         signin=(Button)findViewById(R.id.signin);
-//        checkConnection();
+      //  checkConnection();
 //        if(ConnectivityReceiver.isConnected()==false){
 //            //checkConnection();
 //            displayMobileDataSettingsDialog(MainActivity.this);
@@ -36,17 +53,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 uname=etname.getText().toString();
                 upwd=etpwd.getText().toString();
-                if(uname.equals("")||uname.length()<3){
+                if(uname.equals("")){
                     etname.setError("Enter min 3 chars username");
                     etpwd.setFocusable(true);
 
                 }else if(upwd.equals("")) {
-                    etpwd.setError("Enter valid Mobile no");
+                    etpwd.setError("Enter password");
                     etpwd.setFocusable(true);
 
                 }else {
-                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(i);
+                    getCredentials();
+
                 }
             }
         });
@@ -76,6 +93,71 @@ public class MainActivity extends AppCompatActivity {
         textView.setTextColor(color);
         snackbar.show();
     }
+
+    private void getCredentials() {
+        //checkConnection();
+        // progressbar.setVisibility(View.VISIBLE);
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String serverURL = API.logincredentialsurl;
+           uname=etname.getText().toString().trim();
+            upwd=etpwd.getText().toString().trim();
+            String url = serverURL+"?uname="+uname+"&upass="+upwd;
+            final StringRequest getRequest = new StringRequest(Request.Method.GET, url,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObj = new JSONObject(response);
+                            String res = jsonObj.getString("result");
+
+                            if (res.equals("success")){
+                                Toast.makeText(getApplicationContext(), "Successfully Login", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(getApplicationContext(), HomeActivity.class);
+                                //intent.putExtra("user",loginusername);
+                                SharedPreferences preferences = getSharedPreferences("userdetails",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                uname=etname.getText().toString().trim();
+                                // String pass = edtpass.getText().toString();
+                                editor.putString("loginname",uname);
+                                //editor.putString("loginpassword",upwd);
+                                editor.commit();
+
+                                startActivity(intent);
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
+                                etname.setText("");
+                                etpwd.setText("");
+
+                            }
+                        } catch (final JSONException e) {
+                            Log.e("MainActivity", "Json parsing error: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Toast.makeText(getApplicationContext(), "No Network Connection", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() {
+                Toast.makeText(MainActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+        };
+        queue.add(getRequest);
+    }
+
+
     @Override
     public void onBackPressed() {
         // super.onBackPressed();

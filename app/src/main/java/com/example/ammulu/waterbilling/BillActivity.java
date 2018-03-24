@@ -2,10 +2,13 @@ package com.example.ammulu.waterbilling;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -13,14 +16,37 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.ammulu.waterbilling.Network.API;
+import com.example.ammulu.waterbilling.Network.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BillActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String UPLOAD_KEY = "image";
@@ -31,8 +57,10 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
     private Bitmap bitmap;
     private Uri filePath;
     private Button buttonChoose,b1,upload,billsubmitbtn;
-    EditText etconno,etflatno,etreading;
-    String connno,flatno,reading;
+    EditText etcanno,etflatno,etreading;
+    String connno,flatno,reading,supload;
+    SharedPreferences shre;
+    ProgressDialog pDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +70,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
         b1 = (Button) findViewById(R.id.b1);
         imageView1 = (ImageView) findViewById(R.id.img);
         billsubmitbtn=(Button)findViewById(R.id.billsubmit);
-        etconno=(EditText)findViewById(R.id.editconno);
+        etcanno=(EditText)findViewById(R.id.editconno);
         etflatno=(EditText)findViewById(R.id.editflatno);
         etreading=(EditText)findViewById(R.id.editreading);
         buttonChoose.setOnClickListener(this);
@@ -57,12 +85,12 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
         billsubmitbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                connno=etconno.getText().toString();
+                connno=etcanno.getText().toString();
                 flatno=etflatno.getText().toString();
                 reading=etreading.getText().toString();
                 if(connno.equals("")){
-                    etconno.setError("Enter connection no");
-                    etconno.setFocusable(true);
+                    etcanno.setError("Enter connection no");
+                    etcanno.setFocusable(true);
 
                 }else if(flatno.equals("")) {
                     etflatno.setError("Enter valid Flat no");
@@ -74,7 +102,8 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
                 }else if(imageView1.getDrawable() == null){
                     Toast.makeText(getApplicationContext(),"Please insert image",Toast.LENGTH_LONG).show();
                 } else{
-                    Toast.makeText(getApplicationContext(),"Submitted Successfully",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),"Submitted Successfully",Toast.LENGTH_LONG).show();
+                    canDetails();
                 }
             }
         });
@@ -167,4 +196,108 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+    public void canDetails() {
+        String serverURL = API.canDetailsurl;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, serverURL,new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Billing", response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Billing", "Error: " + error.getMessage());
+                Log.d("Billing", ""+error.getMessage()+","+error.toString());
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                connno = etcanno.getText().toString();
+            flatno = etflatno.getText().toString();
+            reading = etreading.getText().toString();
+                String agentname = shre.getString("loginname", null);
+                supload = getStringImage(bitmap);
+                Map<String, String> data = new HashMap<String, String>();
+                data.put("canno", connno);
+                data.put("flatno", flatno);
+                data.put("reading", reading);
+                data.put("propertyimg", supload);
+                data.put("bid", agentname);
+                return data;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<String, String>();
+                headers.put("Content-Type","application/x-www-form-urlencoded");
+                headers.put("abc", "value");
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+//                    @Override
+//                    public void onResponse(String response) {
+//                       // progressBar.setVisibility(View.GONE);
+//
+//                        try {
+//                            //converting response to json object
+//                            JSONObject obj = new JSONObject(response);
+//
+//                            //if no error in response
+//                            if (!obj.getBoolean("error")) {
+//                                Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+//
+//                                //getting the user from the response
+//                                // JSONObject userJson = obj.getJSONObject("user");
+//
+//                                //creating a new user object
+////                                User user = new User(
+////                                        userJson.getInt("id"),
+////                                        userJson.getString("username"),
+////                                        userJson.getString("email"),
+////                                        userJson.getString("gender")
+//                           //     );
+//
+//                                //storing the user in shared preferences
+//                              //  SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+//
+//                                //starting the profile activity
+//                                finish();
+//                               // startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+//                            } else {
+//                                Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//             connno = etcanno.getText().toString();
+//            flatno = etflatno.getText().toString();
+//            reading = etreading.getText().toString();
+//                String agentname = shre.getString("loginname", null);
+//                supload = getStringImage(bitmap);
+//                HashMap<String, String> data = new HashMap<>();
+//                data.put("canno", connno);
+//                data.put("flatno", flatno);
+//                data.put("reading", reading);
+//                data.put("propertyimg", supload);
+//                data.put("bid", agentname);
+//                return data;
+//            }
+//        };
+//
+//        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+//
+//    }
+ // VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 }
