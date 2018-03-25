@@ -2,6 +2,7 @@ package com.example.ammulu.waterbilling;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,12 +19,16 @@ public class HomeActivity extends AppCompatActivity {
         billing = (Button)findViewById(R.id.billingbtn);
         reports = (Button)findViewById(R.id.reports);
         logout = (Button)findViewById(R.id.logout);
-        shre = getSharedPreferences("userdetails",MODE_PRIVATE);
-        String loginuname = shre.getString("loginname",null);
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //String imgSett = prefs.getString(keyChannel, "");
 
-        if(loginuname==""){
-            Intent i=new Intent(this,MainActivity.class);
-            startActivity(i);
+        if(shre==null) {
+            shre = getSharedPreferences("userdetails", MODE_PRIVATE);
+            String loginuname = shre.getString("loginname", null);
+            if (loginuname == "" || loginuname == null) {
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
+            }
         }
 
         billing.setOnClickListener(new View.OnClickListener() {

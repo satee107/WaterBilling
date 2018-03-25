@@ -33,16 +33,23 @@ import static com.example.ammulu.waterbilling.Network.Conn.displayMobileDataSett
 public class MainActivity extends AppCompatActivity {
     Button signin;
     EditText etname,etpwd;
-    String uname,upwd;
-    int flag = 0;
-   // JSONObject jsonObj;
+    String username,userpwd;
+    SharedPreferences shre;
+
+    // JSONObject jsonObj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        etname=(EditText)findViewById(R.id.editname);
-        etpwd=(EditText)findViewById(R.id.editpwd);
+        etname=(EditText)findViewById(R.id.etname);
+        etpwd=(EditText)findViewById(R.id.etpwd);
         signin=(Button)findViewById(R.id.signin);
+
+//        shre = getSharedPreferences("userdetails",MODE_PRIVATE);
+//        String loginuname = shre.getString("loginname",null);
+
+
+
       //  checkConnection();
 //        if(ConnectivityReceiver.isConnected()==false){
 //            //checkConnection();
@@ -51,13 +58,13 @@ public class MainActivity extends AppCompatActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uname=etname.getText().toString();
-                upwd=etpwd.getText().toString();
-                if(uname.equals("")){
+                username=etname.getText().toString();
+                userpwd=etpwd.getText().toString();
+                if(username.equals("")){
                     etname.setError("Enter min 3 chars username");
                     etpwd.setFocusable(true);
 
-                }else if(upwd.equals("")) {
+                }else if(userpwd.equals("")) {
                     etpwd.setError("Enter password");
                     etpwd.setFocusable(true);
 
@@ -99,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
         // progressbar.setVisibility(View.VISIBLE);
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String serverURL = API.logincredentialsurl;
-           uname=etname.getText().toString().trim();
-            upwd=etpwd.getText().toString().trim();
+           String uname=etname.getText().toString().trim();
+            String upwd=etpwd.getText().toString().trim();
             String url = serverURL+"?uname="+uname+"&upass="+upwd;
             final StringRequest getRequest = new StringRequest(Request.Method.GET, url,
                 new com.android.volley.Response.Listener<String>() {
@@ -112,14 +119,18 @@ public class MainActivity extends AppCompatActivity {
                             String res = jsonObj.getString("result");
 
                             if (res.equals("success")){
+                                //SharedPreferences shared = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                                //SharedPreferences.Editor editor = shared.edit();
+                                //editor.putString(keyChannel, email);
+                                //editor.commit();// commit is important here.
                                 Toast.makeText(getApplicationContext(), "Successfully Login", Toast.LENGTH_SHORT).show();
                                 Intent intent=new Intent(getApplicationContext(), HomeActivity.class);
                                 //intent.putExtra("user",loginusername);
-                                SharedPreferences preferences = getSharedPreferences("userdetails",MODE_PRIVATE);
-                                SharedPreferences.Editor editor = preferences.edit();
-                                uname=etname.getText().toString().trim();
+                                shre = getSharedPreferences("userdetails",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = shre.edit();
+                                String username=etname.getText().toString().trim();
                                 // String pass = edtpass.getText().toString();
-                                editor.putString("loginname",uname);
+                                editor.putString("loginname",username);
                                 //editor.putString("loginpassword",upwd);
                                 editor.commit();
 

@@ -7,4 +7,5 @@ package com.example.ammulu.waterbilling.Network;
 public class API {
     public  static String logincredentialsurl="http://www.globalmrbs.com/mrbs/buildinglogin.php";
     public  static String canDetailsurl="http://www.globalmrbs.com/mrbs/addreading.php";
+    public  static String billCollectUrl="http://www.globalmrbs.com/mrbs/addamount.php";
 }
