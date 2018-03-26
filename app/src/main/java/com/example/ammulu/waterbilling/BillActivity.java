@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -36,6 +39,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ammulu.waterbilling.Network.API;
+import com.example.ammulu.waterbilling.Network.ConnectivityReceiver;
+import com.example.ammulu.waterbilling.Network.MyApplication;
 import com.example.ammulu.waterbilling.Network.VolleySingleton;
 
 import org.json.JSONArray;
@@ -223,10 +228,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
                         //pDialog.dismiss();
                         //progressBar.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(),"Error while Inseerting!!",Toast.LENGTH_LONG).show();
-                        etcanno.setText(" ");
-                        etflatno.setText(" ");
-                        etreading.setText(" ");
-                        imageView1.setImageResource(0);
+
                     }
                 }catch (Exception e){
                     Log.e("ERROR","EXCEPTION");
@@ -243,7 +245,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
             }
         }) {
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public Map<String,String> getParams() throws AuthFailureError {
             connno = etcanno.getText().toString();
             flatno = etflatno.getText().toString();
             reading = etreading.getText().toString();
@@ -253,25 +255,79 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
                 Map<String, String> data = new HashMap<String, String>();
                 data.put("canno", connno);
                 data.put("flatno", flatno);
+                data.put("bid", agentname);
                 data.put("reading", reading);
                 data.put("propertyimg", supload);
-                data.put("bid", agentname);
-                return new JSONObject(data).toString().getBytes();
+                return data;
             }
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json; charset=utf-8");
-                return headers;
-            }
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Content-Type", "application/json; charset=utf-8");
+//                return headers;
+//            }
 
-            @Override
-            public String getBodyContentType() {
-                return "application/json";
-            }
+//            @Override
+//            public String getBodyContentType() {
+//                return "application/json";
+//            }
         };
        VolleySingleton.getInstance(this).addToRequestQueue(sr);
 
     }
 
+//    private boolean checkConnection() {
+//        boolean isConnected = ConnectivityReceiver.isConnected();
+//        showSnack(isConnected);
+//        return isConnected;
+//    }
+//    // Showing the status in Snackbar
+//    private void showSnack(boolean isConnected) {
+//        String message;
+//        int color;
+//        if (isConnected) {
+//            message = "Good! Connected to Internet";
+//            color = Color.WHITE;
+//        } else {
+//            message = "Sorry! Not connected to internet";
+//            color = Color.RED;
+//        }
+//
+//        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),message , Snackbar.LENGTH_LONG);
+//        // snackbar.show();
+////        Snackbar snackbar = Snackbar
+////                .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
+//
+//        View sbView = snackbar.getView();
+//        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+//        textView.setTextColor(color);
+//        snackbar.show();
+//    }
+//    @Override
+//    public void onNetworkConnectionChanged(boolean isConnected) {
+//        showSnack(isConnected);
+//    }
+//
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        // register connection status listener
+//        MyApplication.getInstance().setConnectivityListener(this);
+//    }
+//    public void refresh(){          //refresh is onClick name given to the button
+//        onRestart();
+//    }
+//
+//    @Override
+//    protected void onRestart() {
+//
+//        // TODO Auto-generated method stub
+//        super.onRestart();
+//        Intent i = new Intent(getApplicationContext(), BillActivity.class);  //your class
+//        startActivity(i);
+//        finish();
+//
+//    }
 }

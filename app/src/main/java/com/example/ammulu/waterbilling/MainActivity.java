@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.ammulu.waterbilling.Network.API;
 import com.example.ammulu.waterbilling.Network.Conn;
 import com.example.ammulu.waterbilling.Network.ConnectivityReceiver;
+import com.example.ammulu.waterbilling.Network.MyApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +31,7 @@ import java.util.Map;
 
 import static com.example.ammulu.waterbilling.Network.Conn.displayMobileDataSettingsDialog;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener{
     Button signin;
     EditText etname,etpwd;
     String username,userpwd;
@@ -50,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-      //  checkConnection();
+        checkConnection();
 //        if(ConnectivityReceiver.isConnected()==false){
-//            //checkConnection();
-//            displayMobileDataSettingsDialog(MainActivity.this);
+//            checkConnection();
+//           // displayMobileDataSettingsDialog(MainActivity.this);
 //        }
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +103,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getCredentials() {
-        //checkConnection();
+//        if(ConnectivityReceiver.isConnected()==false){
+//            checkConnection();
+//            // displayMobileDataSettingsDialog(MainActivity.this);
+//        }
+        checkConnection();
         // progressbar.setVisibility(View.VISIBLE);
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String serverURL = API.logincredentialsurl;
@@ -119,10 +124,7 @@ public class MainActivity extends AppCompatActivity {
                             String res = jsonObj.getString("result");
 
                             if (res.equals("success")){
-                                //SharedPreferences shared = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                                //SharedPreferences.Editor editor = shared.edit();
-                                //editor.putString(keyChannel, email);
-                                //editor.commit();// commit is important here.
+
                                 Toast.makeText(getApplicationContext(), "Successfully Login", Toast.LENGTH_SHORT).show();
                                 Intent intent=new Intent(getApplicationContext(), HomeActivity.class);
                                 //intent.putExtra("user",loginusername);
@@ -180,5 +182,37 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
         // }
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+    public void refresh(){          //refresh is onClick name given to the button
+        onRestart();
+    }
+
+    @Override
+    protected void onRestart() {
+
+        // TODO Auto-generated method stub
+        super.onRestart();
+        Intent i = new Intent(getApplicationContext(), BillActivity.class);  //your class
+        startActivity(i);
+        finish();
+
     }
 }
