@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginLeft="40dp"
     android:layout_marginRight="40dp"
@@ -18,7 +21,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="#000089"
         android:gravity="center"
         android:layout_marginBottom="35dp"
@@ -27,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Billing and collection"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:id="@+id/billingbtn"
         android:textColor="#ffffff"
         android:textStyle="bold"
@@ -40,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Reports"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:id="@+id/reports"
@@ -49,10 +52,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Logout"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:id="@+id/logout"
         android:layout_marginTop="30dp"
         android:background="@drawable/btnred"/>
 </LinearLayout>
+</ScrollView>

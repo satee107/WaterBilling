@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
     EditText etname,etpwd;
     String username,userpwd;
     SharedPreferences shre;
+    ProgressBar progressBar;
+
 
     // JSONObject jsonObj;
     @Override
@@ -45,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         etname=(EditText)findViewById(R.id.etname);
         etpwd=(EditText)findViewById(R.id.etpwd);
         signin=(Button)findViewById(R.id.signin);
+        progressBar=findViewById(R.id.progress);
+
 
 //        shre = getSharedPreferences("userdetails",MODE_PRIVATE);
 //        String loginuname = shre.getString("loginname",null);
@@ -59,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 username=etname.getText().toString();
                 userpwd=etpwd.getText().toString();
                 if(username.equals("")){
@@ -70,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                     etpwd.setFocusable(true);
 
                 }else {
+
                     getCredentials();
 
                 }
@@ -118,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progressBar.setVisibility(View.GONE);
 
                         try {
                             JSONObject jsonObj = new JSONObject(response);
@@ -156,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 new com.android.volley.Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        progressBar.setVisibility(View.GONE);
                         // error
                         Toast.makeText(getApplicationContext(), "No Network Connection", Toast.LENGTH_SHORT).show();
                     }
@@ -167,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
                 return null;
             }
         };
+        progressBar.setVisibility(View.VISIBLE);
         queue.add(getRequest);
     }
 

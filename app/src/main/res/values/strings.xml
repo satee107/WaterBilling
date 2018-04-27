@@ -1,17 +1,28 @@
 <resources>
     <string name="app_name">Globalm Meter Billing System</string>
     <string-array name="months">
-        <item>January</item>
-        <item>February</item>
-        <item>March</item>
-        <item>April</item>
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
         <item>May</item>
-        <item>June</item>
-        <item>July</item>
-        <item>August</item>
-        <item>September</item>
-        <item>October</item>
-        <item>November</item>
-        <item>December</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
     </string-array>
+    <string-array name="meters">
+        <item>Metered</item>
+        <item>Unmetered</item>
+    </string-array>
+    <string name="toastdisplay">Successfully Inserted</string>
+    <string name="toastdisplay2">Error while Inseerting!! Try Again</string>
+    <string name="dialog_fire_missiles">Can entered flat number and amount is correct?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>>
+
 </resources>

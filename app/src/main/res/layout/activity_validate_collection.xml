@@ -1,137 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#fff"
-    android:orientation="vertical"
-    android:padding="5dp">
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
-    <HorizontalScrollView
+    android:orientation="vertical">
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3F51B5"
+        app:tabGravity="fill"
+        app:tabSelectedTextColor="@color/colorAccent"/>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
-
-                <TableLayout
-                    android:id="@+id/table_btechCourses"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TableRow
-                        android:id="@+id/table_heading"
-                        android:layout_width="match_parent"
-                        android:weightSum="3"
-                        android:background="@drawable/cell_shape"
-                        android:layout_height="match_parent">
-
-                        <TextView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="0.5"
-                            android:textColor="#fff"
-                            android:background="@drawable/cell_shape"
-                            android:padding="5dp"
-                            android:text="Bid"
-                            android:textStyle="bold" />
-
-                        <TextView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/cell_shape"
-                            android:layout_weight="1"
-                            android:textColor="#fff"
-                            android:textStyle="bold"
-                            android:padding="5dp"
-                            android:text="Flat no"/>
-                        <TextView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/cell_shape"
-                            android:layout_weight="1"
-                            android:textStyle="bold"
-                            android:textColor="#fff"
-                            android:padding="5dp"
-                            android:text="Amount"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/cell_shape"
-                            android:layout_weight="1"
-                            android:textStyle="bold"
-                            android:textColor="#fff"
-                            android:padding="5dp"
-                            android:text="Paid date"/>
-
-                    </TableRow>
-
-
-                    <TableRow
-                        android:id="@+id/table_data"
-                        android:layout_width="match_parent"
-                        android:weightSum="3"
-                        android:background="@drawable/cell_shape"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/collbiddata"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="0.5"
-                            android:background="@drawable/cell_shape_data"
-                            android:padding="5dp"
-                            android:text="bid" />
-
-
-                        <TextView
-                            android:id="@+id/collflatnodata"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/cell_shape_data"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:text="Flat no"/>
-                        <TextView
-                            android:id="@+id/collamountdata"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/cell_shape_data"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:text="amount"/>
-                        <TextView
-                            android:id="@+id/collpaiddate"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/cell_shape_data"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:text="Paid date"/>
-                    </TableRow>
-
-
-                </TableLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </HorizontalScrollView>
-</ScrollView>
 </LinearLayout>

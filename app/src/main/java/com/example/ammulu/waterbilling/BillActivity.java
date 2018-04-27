@@ -20,10 +20,12 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +55,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class BillActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String UPLOAD_KEY = "image";
@@ -67,10 +71,14 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
     String connno,flatno,reading,supload;
     SharedPreferences shre;
     ProgressDialog pDialog;
+    Spinner spin;
+    String itm;
+    TextView billtoas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill);
+        billtoas=findViewById(R.id.billtoast);
         buttonChoose = (Button) findViewById(R.id.browse);
         upload = (Button) findViewById(R.id.billsubmit);
         b1 = (Button) findViewById(R.id.b1);
@@ -79,6 +87,29 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
         etcanno=(EditText)findViewById(R.id.editconno);
         etflatno=(EditText)findViewById(R.id.editflatno);
         etreading=(EditText)findViewById(R.id.editreading);
+        spin = (Spinner)findViewById(R.id.meter);
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                itm = spin.getSelectedItem().toString();
+                if(itm.equalsIgnoreCase("Unmetered"))
+                {
+                    etreading.setText("Not Working");
+                   // Toast.makeText(getApplicationContext(),itm,Toast.LENGTH_LONG).show();
+
+                }
+                else
+                {
+                    etreading.setText("");
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         buttonChoose.setOnClickListener(this);
         b1.setOnClickListener(this);
         upload.setOnClickListener(this);
@@ -94,6 +125,8 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
                 connno=etcanno.getText().toString();
                 flatno=etflatno.getText().toString();
                 reading=etreading.getText().toString();
+                itm = spin.getSelectedItem().toString();
+
                 if(connno.equals("")){
                     etcanno.setError("Enter connection no");
                     etcanno.setFocusable(true);
@@ -218,7 +251,19 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
                     if (res.equals("success")) {
                        // pDialog.dismiss();
                         //progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(),"Successfully Inserted",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(),"Successfully Inserted",Toast.LENGTH_LONG).show();
+                        billtoas.setText(R.string.toastdisplay);
+                        Timer t = new Timer(false);
+                        t.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        billtoas.setText("");                                    }
+                                });
+                            }
+                        }, 5000);
+
                         etcanno.setText(" ");
                         etflatno.setText(" ");
                         etreading.setText(" ");
@@ -227,7 +272,9 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
                     } else{
                         //pDialog.dismiss();
                         //progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(),"Error while Inseerting!!",Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getApplicationContext(),"Error while Inseerting!!",Toast.LENGTH_LONG).show();
+                        billtoas.setText(R.string.toastdisplay2);
+                        billtoas.setTextColor(Color.RED);
 
                     }
                 }catch (Exception e){
@@ -249,6 +296,8 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
             connno = etcanno.getText().toString();
             flatno = etflatno.getText().toString();
             reading = etreading.getText().toString();
+            itm = spin.getSelectedItem().toString();
+
                 shre = getSharedPreferences("userdetails",MODE_PRIVATE);
                 String agentname = shre.getString("loginname", null);
                 supload = getStringImage(bitmap);
@@ -258,6 +307,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
                 data.put("bid", agentname);
                 data.put("reading", reading);
                 data.put("propertyimg", supload);
+                data.put("meter",itm);
                 return data;
             }
 //            @Override

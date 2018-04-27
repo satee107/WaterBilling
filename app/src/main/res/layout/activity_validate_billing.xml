@@ -1,152 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:orientation="vertical"
-    android:padding="5dp">
-
-
-    <ScrollView
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#3F51B5"
+            app:tabGravity="fill"
+            app:tabSelectedTextColor="@color/colorAccent"/>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <TableLayout
-                        android:id="@+id/table_btechCourses"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <TableRow
-                            android:id="@+id/table_heading"
-                            android:layout_width="match_parent"
-                            android:weightSum="4"
-                            android:background="@drawable/cell_shape"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="0.5"
-                                android:textColor="#fff"
-                                android:background="@drawable/cell_shape"
-                                android:padding="5dp"
-                                android:text="Bid"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/cell_shape"
-                                android:layout_weight="0.5"
-                                android:textColor="#fff"
-                                android:textStyle="bold"
-                                android:padding="5dp"
-                                android:text="Canno"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/cell_shape"
-                                android:layout_weight="1"
-                                android:textStyle="bold"
-                                android:textColor="#fff"
-                                android:padding="5dp"
-                                android:text="Flat no"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/cell_shape"
-                                android:layout_weight="1"
-                                android:textStyle="bold"
-                                android:textColor="#fff"
-                                android:padding="5dp"
-                                android:text="Reading"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/cell_shape"
-                                android:layout_weight="1"
-                                android:textColor="#fff"
-                                android:textStyle="bold"
-                                android:padding="5dp"
-                                android:text="Readind date"/>
-                        </TableRow>
-
-
-
-
-                        <TableRow
-                            android:id="@+id/table_data"
-                            android:layout_width="match_parent"
-                            android:weightSum="4"
-                            android:background="@drawable/cell_shape"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:id="@+id/biddata"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="0.5"
-                                android:background="@drawable/cell_shape_data"
-                                android:padding="5dp"
-                                android:text="bid" />
-
-                            <TextView
-                                android:id="@+id/candata"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/cell_shape_data"
-                                android:layout_weight="0.5"
-                                android:padding="5dp"
-                                android:text="canno"/>
-                            <TextView
-                                android:id="@+id/flatnodata"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/cell_shape_data"
-                                android:layout_weight="1"
-                                android:padding="5dp"
-                                android:text="Flat no"/>
-                            <TextView
-                                android:id="@+id/readingdata"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/cell_shape_data"
-                                android:layout_weight="1"
-                                android:padding="5dp"
-                                android:text="reading"/>
-                            <TextView
-                                android:id="@+id/readingdate"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/cell_shape_data"
-                                android:layout_weight="1"
-                                android:padding="5dp"
-                                android:text="Pimgdata"/>
-                        </TableRow>
-
-
-                    </TableLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </HorizontalScrollView>
-    </ScrollView>
 </LinearLayout>

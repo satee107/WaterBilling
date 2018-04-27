@@ -1,5 +1,12 @@
 package com.example.ammulu.waterbilling;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -28,17 +35,21 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CollectionActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
      Button collectionback,collectionsubmit;
      EditText etcflatno,etcamount;
      String cflatno,camount;
      SharedPreferences shre;
+     TextView collecttoas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
+        collecttoas=findViewById(R.id.collecttoast);
         collectionback=(Button)findViewById(R.id.collectionback);
         etcflatno=(EditText)findViewById(R.id.editcflatno);
         etcamount=(EditText)findViewById(R.id.editcamount);
@@ -59,7 +70,31 @@ public class CollectionActivity extends AppCompatActivity implements Connectivit
                     etcamount.setFocusable(true);
 
                 }else {
-                    billCollect();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CollectionActivity.this);
+                    //Uncomment the below code to Set the message and title from the strings.xml file
+                    //builder.setMessage(R.string.dialog_message) .setTitle(R.string.dialog_title);
+
+                    //Setting message manually and performing action on button click
+                    builder.setMessage("Can entered flat number and amount is correct?")
+                            .setCancelable(false)
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    billCollect();
+                                }
+                            })
+                            .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //  Action for 'NO' Button
+                                    dialog.cancel();
+                                }
+                            });
+
+                    //Creating dialog box
+                    AlertDialog alert = builder.create();
+                    //Setting the title manually
+                    alert.setTitle("Alert !");
+                    alert.show();
+
                 }
             }
         });
@@ -71,6 +106,28 @@ public class CollectionActivity extends AppCompatActivity implements Connectivit
             }
         });
     }
+
+//    @SuppressLint("ValidFragment")
+//    public static class FireMissilesDialogFragment extends DialogFragment {
+//        @Override
+//        public Dialog onCreateDialog(Bundle savedInstanceState) {
+//            // Use the Builder class for convenient dialog construction
+//            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//            builder.setMessage(R.string.dialog_fire_missiles)
+//                    .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            // FIRE ZE MISSILES!
+//                        }
+//                    })
+//                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            // User cancelled the dialog
+//                        }
+//                    });
+//            // Create the AlertDialog object and return it
+//            return builder.create();
+//        }
+//    }
 
     private boolean checkConnection() {
         boolean isConnected = ConnectivityReceiver.isConnected();
@@ -116,7 +173,19 @@ public class CollectionActivity extends AppCompatActivity implements Connectivit
                         if (res.equals("success")) {
                             // pDialog.dismiss();
                             //progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(), "Successfully Inserted", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), "Successfully Inserted", Toast.LENGTH_LONG).show();
+                            collecttoas.setText(R.string.toastdisplay);
+                            Timer t = new Timer(false);
+                            t.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            collecttoas.setText("");
+                                        }
+                                    });
+                                }
+                            }, 5000);
                             etcflatno.setText(" ");
                             etcamount.setText(" ");
 
@@ -124,7 +193,9 @@ public class CollectionActivity extends AppCompatActivity implements Connectivit
                         } else {
                             //pDialog.dismiss();
                             //progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(), "Error while Inseerting!!", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), "Error while Inseerting!!", Toast.LENGTH_LONG).show();
+                            collecttoas.setText(R.string.toastdisplay2);
+                            collecttoas.setTextColor(Color.RED);
                             etcflatno.setText(" ");
                             etcamount.setText(" ");
 

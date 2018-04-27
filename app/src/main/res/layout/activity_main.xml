@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.example.ammulu.waterbilling.MainActivity">
 
     <LinearLayout
@@ -26,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="#000089"
                 android:gravity="center"
                 android:text="Globalm Meter Billing System"/>
@@ -53,7 +56,7 @@
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textColor="#000"
-                    android:textSize="18dp" />
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -74,10 +77,17 @@
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textColor="#000"
-                    android:textSize="18dp" />
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:visibility="gone"
+            android:id="@+id/progress"/>
         <Button
             android:id="@+id/signin"
             android:layout_width="250dp"
@@ -98,3 +108,4 @@
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
+</ScrollView>
