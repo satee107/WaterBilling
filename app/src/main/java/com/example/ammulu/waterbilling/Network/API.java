@@ -13,6 +13,5 @@ public class API {
     public  static String getreportsUrl="http://www.globalmrbs.com/mrbs/getreport.php";
     public  static String getunreadingsUrl="http://www.globalmrbs.com/mrbs/getreadingsr.php";
     public  static String getunpaidamountstUrl="http://www.globalmrbs.com/mrbs/getamountsr.php";
-
-
+    public  static String canrequesturl="http://www.globalmrbs.com/mrbs/getdet1.php";
 }

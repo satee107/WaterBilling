@@ -58,7 +58,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BillActivity extends AppCompatActivity implements View.OnClickListener{
+public class BillActivity extends AppCompatActivity implements View.OnClickListener,ConnectivityReceiver.ConnectivityReceiverListener{
     public static final String UPLOAD_KEY = "image";
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private String userChoosenTask;
@@ -74,6 +74,7 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
     Spinner spin;
     String itm;
     TextView billtoas;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +89,8 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
         etflatno=(EditText)findViewById(R.id.editflatno);
         etreading=(EditText)findViewById(R.id.editreading);
         spin = (Spinner)findViewById(R.id.meter);
+        progressBar=findViewById(R.id.progress);
+        checkConnection();
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -146,6 +149,9 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+
+
+
 
     }
     private void showFileChooser() {
@@ -240,76 +246,79 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
 //        pDialog = new ProgressDialog(getApplicationContext());
 //        pDialog.setMessage("Inserting....");
 //        pDialog.show();
-        String serverURL = API.canDetailsurl;
-        StringRequest sr = new StringRequest(Request.Method.POST, serverURL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+        if(checkConnection()) {
+            String serverURL = API.canDetailsurl;
+            StringRequest sr = new StringRequest(Request.Method.POST, serverURL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
 
-                try {
-                    JSONObject jsonObj = new JSONObject(response);
-                    String res = jsonObj.getString("result");
-                    if (res.equals("success")) {
-                       // pDialog.dismiss();
-                        //progressBar.setVisibility(View.GONE);
-                        //Toast.makeText(getApplicationContext(),"Successfully Inserted",Toast.LENGTH_LONG).show();
-                        billtoas.setText(R.string.toastdisplay);
-                        Timer t = new Timer(false);
-                        t.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        billtoas.setText("");                                    }
-                                });
-                            }
-                        }, 5000);
+                    try {
+                        JSONObject jsonObj = new JSONObject(response);
+                        String res = jsonObj.getString("result");
+                        if (res.equals("success")) {
+                            progressBar.setVisibility(View.GONE);
+                            // pDialog.dismiss();
+                            //progressBar.setVisibility(View.GONE);
+                            //Toast.makeText(getApplicationContext(),"Successfully Inserted",Toast.LENGTH_LONG).show();
+                            billtoas.setText(R.string.toastdisplay);
+                            Timer t = new Timer(false);
+                            t.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            billtoas.setText("");
+                                        }
+                                    });
+                                }
+                            }, 5000);
 
-                        etcanno.setText(" ");
-                        etflatno.setText(" ");
-                        etreading.setText(" ");
-                        imageView1.setImageResource(0);
+                            etcanno.setText(" ");
+                            etflatno.setText(" ");
+                            etreading.setText(" ");
+                            imageView1.setImageResource(0);
 
-                    } else{
-                        //pDialog.dismiss();
-                        //progressBar.setVisibility(View.GONE);
-                       // Toast.makeText(getApplicationContext(),"Error while Inseerting!!",Toast.LENGTH_LONG).show();
-                        billtoas.setText(R.string.toastdisplay2);
-                        billtoas.setTextColor(Color.RED);
+                        } else {
+                            //pDialog.dismiss();
+                            //progressBar.setVisibility(View.GONE);
+                            // Toast.makeText(getApplicationContext(),"Error while Inseerting!!",Toast.LENGTH_LONG).show();
+                            billtoas.setText(R.string.toastdisplay2);
+                            billtoas.setTextColor(Color.RED);
 
+                        }
+                    } catch (Exception e) {
+                        Log.e("ERROR", "EXCEPTION");
                     }
-                }catch (Exception e){
-                    Log.e("ERROR","EXCEPTION");
+
                 }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.d("Billing", "Error: " + error.getMessage());
+                    Log.d("Billing", "" + error.getMessage() + "," + error.toString());
+                    // pDialog.dismiss();
+                    //mView.showMessage(error.getMessage());
+                }
+            }) {
+                @Override
+                public Map<String, String> getParams() throws AuthFailureError {
+                    connno = etcanno.getText().toString();
+                    flatno = etflatno.getText().toString();
+                    reading = etreading.getText().toString();
+                    itm = spin.getSelectedItem().toString();
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Billing", "Error: " + error.getMessage());
-                Log.d("Billing", ""+error.getMessage()+","+error.toString());
-               // pDialog.dismiss();
-                //mView.showMessage(error.getMessage());
-            }
-        }) {
-            @Override
-            public Map<String,String> getParams() throws AuthFailureError {
-            connno = etcanno.getText().toString();
-            flatno = etflatno.getText().toString();
-            reading = etreading.getText().toString();
-            itm = spin.getSelectedItem().toString();
-
-                shre = getSharedPreferences("userdetails",MODE_PRIVATE);
-                String agentname = shre.getString("loginname", null);
-                supload = getStringImage(bitmap);
-                Map<String, String> data = new HashMap<String, String>();
-                data.put("canno", connno);
-                data.put("flatno", flatno);
-                data.put("bid", agentname);
-                data.put("reading", reading);
-                data.put("propertyimg", supload);
-                data.put("meter",itm);
-                return data;
-            }
+                    shre = getSharedPreferences("userdetails", MODE_PRIVATE);
+                    String agentname = shre.getString("loginname", null);
+                    supload = getStringImage(bitmap);
+                    Map<String, String> data = new HashMap<String, String>();
+                    data.put("canno", connno);
+                    data.put("flatno", flatno);
+                    data.put("bid", agentname);
+                    data.put("reading", reading);
+                    data.put("propertyimg", supload);
+                    data.put("meter", itm);
+                    return data;
+                }
 //            @Override
 //            public Map<String, String> getHeaders() throws AuthFailureError {
 //                HashMap<String, String> headers = new HashMap<String, String>();
@@ -321,63 +330,53 @@ public class BillActivity extends AppCompatActivity implements View.OnClickListe
 //            public String getBodyContentType() {
 //                return "application/json";
 //            }
-        };
-       VolleySingleton.getInstance(this).addToRequestQueue(sr);
-
+            };
+            progressBar.setVisibility(View.VISIBLE);
+            VolleySingleton.getInstance(this).addToRequestQueue(sr);
+        }else{
+            Toast.makeText(this, "Hi, you have to upload manually", Toast.LENGTH_SHORT).show();
+        }
     }
 
-//    private boolean checkConnection() {
-//        boolean isConnected = ConnectivityReceiver.isConnected();
-//        showSnack(isConnected);
-//        return isConnected;
-//    }
-//    // Showing the status in Snackbar
-//    private void showSnack(boolean isConnected) {
-//        String message;
-//        int color;
-//        if (isConnected) {
-//            message = "Good! Connected to Internet";
-//            color = Color.WHITE;
-//        } else {
-//            message = "Sorry! Not connected to internet";
-//            color = Color.RED;
-//        }
-//
-//        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),message , Snackbar.LENGTH_LONG);
-//        // snackbar.show();
-////        Snackbar snackbar = Snackbar
-////                .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
-//
-//        View sbView = snackbar.getView();
-//        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//        textView.setTextColor(color);
-//        snackbar.show();
-//    }
-//    @Override
-//    public void onNetworkConnectionChanged(boolean isConnected) {
-//        showSnack(isConnected);
-//    }
-//
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        // register connection status listener
-//        MyApplication.getInstance().setConnectivityListener(this);
-//    }
-//    public void refresh(){          //refresh is onClick name given to the button
-//        onRestart();
-//    }
-//
-//    @Override
-//    protected void onRestart() {
-//
-//        // TODO Auto-generated method stub
-//        super.onRestart();
-//        Intent i = new Intent(getApplicationContext(), BillActivity.class);  //your class
-//        startActivity(i);
-//        finish();
-//
-//    }
+    private boolean checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        showSnack(isConnected);
+        return isConnected;
+    }
+    // Showing the status in Snackbar
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = "Good! Connected to Internet";
+            color = Color.WHITE;
+        } else {
+            message = "Sorry! Not connected to internet";
+            color = Color.RED;
+        } Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),message , Snackbar.LENGTH_LONG);
+        // snackbar.show();
+//        Snackbar snackbar = Snackbar
+//                .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register connection status listener
+        MyApplication.getInstance().setConnectivityListener(this);
+    }
+
+
+
+
 }
