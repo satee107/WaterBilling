@@ -9,14 +9,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_marginLeft="40dp"
-    android:layout_marginRight="40dp"
-    android:layout_marginBottom="40dp"
+    android:layout_margin="20dp"
     tools:context="com.example.ammulu.waterbilling.ValidateActivity">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="170dp"
+        android:layout_height="wrap_content"
         android:src="@drawable/transwaterlogo" />
     <TextView
         android:layout_width="wrap_content"
@@ -25,8 +23,7 @@
         android:textColor="#000089"
         android:gravity="center"
         android:layout_marginBottom="30dp"
-        android:padding="5dp"
-        android:text="Globalm Meter Billing System"/>
+        android:text="Revenue Billing System"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

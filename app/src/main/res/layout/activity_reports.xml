@@ -20,9 +20,8 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="#000089"
-        android:padding="10dp"
         android:gravity="center"
-        android:text="Globalm Meter Billing System"/>
+        android:text="Revenue Billing System"/>
     <!--<Spinner
         android:id="@+id/reportmeter"
         android:layout_width="match_parent"

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
     android:layout_width="match_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,7 +16,6 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:src="@drawable/transwaterlogo" />
     <TextView
         android:layout_width="wrap_content"
@@ -23,16 +23,8 @@
         android:textSize="20sp"
         android:textColor="#000089"
         android:gravity="center"
-        android:padding="15dp"
-        android:text="Globalm Meter Billing System"/>
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/meter"
-        style="@style/spinner_style"
-        android:entries="@array/meters">
-    </Spinner>
+        android:text="Revenue Billing System"/>
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_name"
         android:layout_width="match_parent"
@@ -51,6 +43,15 @@
             android:textColor="#000"
             android:textSize="18sp" />
     </android.support.design.widget.TextInputLayout>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/meter"
+        style="@style/spinner_style"
+        android:entries="@array/meters">
+    </Spinner>
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_flatno"
         android:layout_width="match_parent"
@@ -122,6 +123,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:visibility="gone"
+            android:id="@+id/progress"/>
     <Button
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -131,6 +139,7 @@
         android:id="@+id/billsubmit"
         android:textColor="#ffffff"
         android:textStyle="bold"
+        android:layout_marginBottom="30dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/btnblue"
         tools:ignore="NestedWeights" />
@@ -141,6 +150,7 @@
         android:textSize="15sp"
         android:layout_marginStart="5dp"
         android:layout_weight="1"
+        android:layout_marginBottom="30dp"
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:id="@+id/b1"

@@ -43,7 +43,9 @@
         <activity android:name=".ValidateActivity" />
         <activity android:name=".SubBillingActivity" />
         <activity android:name=".ValidateBillingActivity" />
-        <activity android:name=".ValidateCollectionActivity"></activity>
+        <activity android:name=".ValidateCollectionActivity">
+
+        </activity>
     </application>
 
 </manifest>

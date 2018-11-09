@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Globalm Meter Billing System</string>
+    <string name="app_name">Globalm Metering</string>
     <string-array name="months">
         <item>Jan</item>
         <item>Feb</item>

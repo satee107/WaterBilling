@@ -8,15 +8,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginLeft="30dp"
-    android:layout_marginRight="30dp"
+    android:layout_margin="20dp"
     android:gravity="center"
     tools:context="com.example.ammulu.waterbilling.CollectionActivity">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="165dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="wrap_content"
         android:src="@drawable/transwaterlogo"/>
     <TextView
         android:layout_width="wrap_content"
@@ -24,8 +22,42 @@
         android:textSize="20sp"
         android:textColor="#000089"
         android:gravity="center"
-        android:text="Globalm Meter Billing System"/>
+        android:text="Revenue Billing System"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_canno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+        <EditText
+            android:id="@+id/editccanno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Can No"
+            android:inputType="text"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="#000"
+            android:textSize="18sp" />
+    </android.support.design.widget.TextInputLayout>
+        <Button
+            android:id="@+id/getcan"
+            android:drawableLeft="@android:drawable/ic_menu_search"
+            android:text="get"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+<ProgressBar
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/progress"
+    android:visibility="gone"/>
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_flatno"
         android:layout_width="match_parent"
@@ -67,7 +99,7 @@
         android:layout_height="wrap_content"
         android:text=""
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_margin="20dp"
         android:textStyle="bold"
         android:id="@+id/collecttoast"
         android:textColor="@color/toastcolor"
@@ -87,7 +119,7 @@
             android:layout_weight="1"
             android:textStyle="bold"
             android:layout_marginEnd="5dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/btnblue"
             />
         <Button
